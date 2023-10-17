@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Menú | UTC-6 Lobby Bar</title>
+
+    <script src="/jquery/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+
+<style>
+    @font-face {
+        font-family: 'ApexSans Bold';
+        src: url('../assets/fonts/apexsans-bold-webfont.woff2') format('woff2'),
+            url('../assets/fonts/apexsans-bold-webfont.woff') format('woff');
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'ApexSans Book';
+        src: url('../assets/fonts/apexsans-book-webfont.woff2') format('woff2'),
+            url('../assets/fonts/apexsans-book-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        font-family: 'ApexSans Medium';
+        src: url('../assets/fonts/apexsans-medium-webfont.woff2') format('woff2'),
+            url('../assets/fonts/apexsans-medium-webfont.woff') format('woff');
+        font-weight: lighter;
+        font-style: normal;
+    }
+
+    *,
+    body {
+        background-color: #191e3d;
+        color: white;
+        font-family: 'ApexSans Book', sans-serif;
+    }
+
+    .titulo {
+        font-size: 2rem;
+        color: white !important;
+        font-weight: bolder;
+    }
+
+    .ing {
+        font-size: 14px;
+        color: #6c757d !important;
+    }
+
+    .bebidas {
+        font-size: 13px;
+    }
+
+    @media screen and (min-width:992px) {
+        .titulo {
+            font-size: 3rem;
+        }
+
+        .derecho {
+            border-right: dashed 1px white;
+            padding-right: 5%;
+        }
+    }
+
+    h6,
+    h5 {
+        display: flex;
+        align-items: center;
+    }
+
+    .apio h6::before {
+        content: url("../assets/img/restaurants/alergenos/apio.png");
+    }
+
+    .cacahuate h6::before {
+        content: url("../assets/img/restaurants/alergenos/cacahuate.png");
+    }
+
+    .gluten h6::before {
+        content: url("../assets/img/restaurants/alergenos/cereales_gluten.png");
+    }
+
+    .frutos-secos h6::before {
+        content: url("../assets/img/restaurants/alergenos/frutos_secos.png");
+    }
+
+    .huevo h6::before {
+        content: url("../assets/img/restaurants/alergenos/huevo.png");
+    }
+
+    .lactosa h6::before {
+        content: url("../assets/img/restaurants/alergenos/lactosa.png");
+    }
+
+    .pescado h6::before {
+        content: url("../assets/img/restaurants/alergenos/pescado.png");
+    }
+
+    .mariscos h6::before {
+        content: url("../assets/img/restaurants/alergenos/mariscos.png");
+    }
+
+    .picantes h6::before {
+        content: url("../assets/img/restaurants/alergenos/picantes.png");
+    }
+
+    .nuez h6::before {
+        content: url("../assets/img/restaurants/alergenos/nuez.png");
+    }
+
+    .icons {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 2em;
+        justify-content: center;
+    }
+
+    .icons div {
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: nowrap;
+    }
+
+    .icons img {
+        padding-bottom: 0.5em;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center px-2" id="secciones">
+            <div class="col-12 pb-5 pt-5 text-center">
+                <div class="pb-5">
+                    <a href="../"><img src="../assets/img/restaurants/UTC-6_BCO.png" class="img-fluid" style="width:150px" alt="Logo UTC_6_Lobby_Bar"></a>
+                </div>
+                <h2 class="text-uppercase text-center subtitulo pt-5">Menú / Menu</h2>
+                <h4 class="text-uppercase text-center p-3 font-weight-bold">EL CONSUMO DE ALIMENTOS CRUDOS Y DE HUEVO CRUDO ES RESPONSABILIDAD DE QUIEN LOS CONSUME, YA QUE PUEDEN AFECTAR SU SALUD.</h4>
+            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+       fetch("menus.json")
+            .then(js=>js.text())
+            .then(jstext=>{callback(jstext)})
+
+            let divleft = '"col-lg-6 pt-5 derecho"';
+            let divright = '"col-lg-6 pt-5 pl-lg-5"';
+            let div_desayunoleft = 'col-lg-6 pt-4 derecho';
+            let div_desayunoright = 'col-lg-6 pt-4 pl-lg-5';
+
+
+        function callback(dato){
+            let data = JSON.parse(dato);
+            let section = '';
+            let div_open = false;
+            let div_class ='';
+            let clase_titulos1 = 'text-uppercase text-center border border-white p-3 font-weight-bold';
+            let clase_secciones1 = 'text-uppercase text-center font-weight-bold'
+            let clase_subsecciones1 = 'text-uppercase text-center font-weight-bold';
+            let clase_encabezado = 'col-12 pb-5 text-center pt-5';
+            let clase_titulo = 'class="text-danger text-uppercase text-center titulo';
+            let clase_secciones2 = 'text-danger text-uppercase text-left';
+            let type_div = 1;
+            let header_desayuno = false;
+            data.menu.forEach(e => {
+                e.secciones.forEach((s,index) => {
+                    if(e.name != 'desayunos'){
+                        if(typeof s.name == 'undefined' && s.name != 'vinos'){
+                            if(div_open == false){
+                                div_class = get_div(type_div);
+                                section += '<div class='+ div_class + '>'
+                            }
+                            div_open = true;
+                            
+                            if(typeof s.titulo != 'undefined'){
+                                section += `<h3 class="${clase_titulos1}">${s.titulo}</h3>`
+                            }
+                            if(typeof s.seccion != 'undefined'){
+                                section += `<h5 class="${clase_secciones1}">${s.seccion}</h5>`
+                            }
+                            if(typeof s.sub_seccion != 'undefined'){
+                                section += `<h5 class="${clase_secciones1}">${s.sub_seccion}</h5>`
+                            }
+                            //section += `</div>`
+                            s.platillo.forEach(p => {
+                                if(p.break_div == true){
+                                    section += `</div>`
+                                    div_open = false;
+                                    if(type_div == 1){
+                                        type_div = 2
+                                    }else{
+                                        type_div = 1
+                                    }
+                                }
+                                
+                            })
+                        }else{
+                            div_class = get_div(type_div);
+                            section += '<div class='+ div_class + '>'
+                            
+                            if(typeof s.titulo != 'undefined'){
+                                section += `<h3 class="${clase_titulos1}">${s.titulo}</h3>`
+                            }
+                            if(typeof s.seccion != 'undefined'){
+                                section += `<h5 class="${clase_secciones1}">${s.seccion}</h5>`
+                            }
+                            if(typeof s.sub_seccion != 'undefined'){
+                                section += `<h5 class="${clase_secciones1}">${s.sub_seccion}</h5>`
+                            }
+                            section += `</div>`
+                        }
+                    }else{
+                        if(!header_desayuno){
+                            section += `<div class="${clase_encabezado}"><h1 class="${clase_titulo}">${e.encabezado}</h1></div>`
+                            header_desayuno = true;
+                        }
+                        div_class = get_div(type_div);
+                        section += '<div class='+ div_class + '>'
+                        section += `<h3 class="${clase_secciones2}">${s.seccion}</h3></div>`
+                        if(type_div == 1){
+                            type_div = 2
+                        }else{
+                            type_div = 1
+                        }
+                    }
+                })
+            });
+            $('#secciones').append(section);
+        }
+        function get_div(index){
+            let divs = '';
+            if( index == 1){
+                divs = divleft;
+            }
+            else{
+                divs = divright;
+            }
+            return divs;
+        }
+        function _get_div(index){
+            let divs = '';
+            if( index % 2 == 0){
+                divs = divleft;
+            }
+            else{
+                divs = divright;
+            }
+            return divs;
+        }
+    </script>
+    </body>
+    </html>
